@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Monchhichi Room</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="game-shell" aria-label="Habitación del juego">
+      <div id="game" class="game" tabindex="0" aria-label="Zona de juego">
+        <img class="room-bg" src="assets/room_bg.png" alt="" draggable="false" />
+
+        <button id="letterObject" class="world-object letter-object" type="button" aria-label="Leer carta">
+          <img class="pixel" src="assets/letter_icon.png" alt="" draggable="false" />
+        </button>
+        <button id="radioObject" class="world-object radio-object" type="button" aria-label="Abrir playlist">
+          <img class="pixel" src="assets/radio_icon.png" alt="" draggable="false" />
+        </button>
+        <button id="basketObject" class="world-object basket-object" type="button" aria-label="Jugar Banana Catch">
+          <img class="pixel" src="assets/basket_toy.png" alt="" draggable="false" />
+        </button>
+        <button id="chestObject" class="world-object chest-object" type="button" aria-label="Abrir cofre final">
+          <img class="pixel" src="assets/final_chest.png" alt="" draggable="false" />
+        </button>
+
+        <img id="chestSparkle" class="world-effect chest-sparkle pixel" src="assets/sparkle.png" alt="" draggable="false" />
+
+        <img id="letterPrompt" class="world-prompt letter-prompt pixel" src="assets/read_prompt.png" alt="" draggable="false" />
+        <img id="radioPrompt" class="world-prompt radio-prompt pixel" src="assets/listen_prompt.png" alt="" draggable="false" />
+        <img id="basketPrompt" class="world-prompt basket-prompt pixel" src="assets/play_prompt.png" alt="" draggable="false" />
+        <img id="chestPrompt" class="world-prompt chest-prompt pixel" src="assets/locked_prompt.png" alt="" draggable="false" />
+
+        <img id="player" class="player pixel" src="assets/mon_front.png" alt="Monchhichi" draggable="false" />
+
+        <div class="debug-layer" id="debugLayer" aria-hidden="true">
+          <div class="interaction-zone letter-zone">carta</div>
+          <div class="interaction-zone radio-zone">radio</div>
+          <div class="interaction-zone basket-zone">juego</div>
+          <div class="interaction-zone chest-zone">cofre</div>
+          <div class="obstacle bed-box">cama</div>
+          <div class="obstacle nightstand-box">mesita</div>
+          <div class="obstacle vanity-box">tocador</div>
+          <div class="obstacle shelf-box">repisa</div>
+          <div class="obstacle basket-box">cesto fijo</div>
+          <div class="obstacle plant-box">planta</div>
+        </div>
+      </div>
+
+      <div class="controls" aria-label="Controles de movimiento">
+        <button class="ctrl up" data-dir="up" aria-label="Mover arriba"><img src="assets/arrow_up.png" alt="" draggable="false" /></button>
+        <button class="ctrl left" data-dir="left" aria-label="Mover izquierda"><img src="assets/arrow_left.png" alt="" draggable="false" /></button>
+        <button class="ctrl down" data-dir="down" aria-label="Mover abajo"><img src="assets/arrow_down.png" alt="" draggable="false" /></button>
+        <button class="ctrl right" data-dir="right" aria-label="Mover derecha"><img src="assets/arrow_right.png" alt="" draggable="false" /></button>
+      </div>
+
+      <button id="debugBtn" class="debug-btn" type="button">DEBUG: OFF</button>
+      <p class="hint">Acércate a un objeto hasta que aparezca su prompt y luego tócalo.</p>
+    </section>
+  </main>
+
+  <div id="letterModal" class="modal" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-card letter-card" role="dialog" aria-modal="true" aria-label="Carta">
+      <button class="modal-close image-button" type="button" data-close-modal aria-label="Cerrar"><img src="assets/close_icon.png" alt="" /></button>
+      <img id="letterImage" class="letter-image pixel" src="assets/letter_one.png" alt="Carta" />
+    </section>
+  </div>
+
+  <div id="minigameModal" class="modal" hidden>
+    <div class="modal-backdrop" data-close-minigame></div>
+    <section class="modal-card minigame-card" role="dialog" aria-modal="true" aria-label="Banana Catch">
+      <div id="minigameStage" class="minigame-stage">
+        <img class="minigame-bg pixel" src="assets/minigame_bg.png" alt="" draggable="false" />
+        <button class="modal-close image-button minigame-close" type="button" data-close-minigame aria-label="Cerrar minijuego"><img src="assets/close_icon.png" alt="" /></button>
+
+        <div class="banana-counter" aria-live="polite">
+          <img class="counter-frame pixel" src="assets/banana_counter_frame.png" alt="" draggable="false" />
+          <span id="bananaCountText" class="counter-text">0/5</span>
+        </div>
+
+        <img id="fallingBanana" class="falling-banana pixel" src="assets/banana.png" alt="" draggable="false" />
+        <img id="catchBasket" class="catch-basket pixel" src="assets/basket.png" alt="" draggable="false" />
+
+        <div id="minigameControls" class="minigame-controls" aria-label="Mover cesto">
+          <button class="mini-ctrl" type="button" data-mini-dir="left" aria-label="Mover cesto a la izquierda"><img src="assets/arrow_left.png" alt="" draggable="false" /></button>
+          <button class="mini-ctrl" type="button" data-mini-dir="right" aria-label="Mover cesto a la derecha"><img src="assets/arrow_right.png" alt="" draggable="false" /></button>
+        </div>
+
+        <div id="victoryPanel" class="victory-panel" hidden aria-live="polite">
+          <div class="victory-inner">
+            <h2>¡LO LOGRASTE!</h2>
+            <img class="victory-key pixel" src="assets/key_reward.png" alt="Llave del cofre final" />
+            <p>Encontraste la llave del cofre final ♡</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <audio id="minigameAudio" src="assets/banana_allergy_monkey.mp3" preload="auto" loop></audio>
+  <script src="script.js"></script>
+</body>
+</html>
